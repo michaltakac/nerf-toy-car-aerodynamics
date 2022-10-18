@@ -1,0 +1,1619 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary audioSettings = {
+            double dopplerLimit = 2
+            double dopplerScale = 1
+            token enableDistanceDelay = "off"
+            token enableDoppler = "off"
+            token enableInterauralDelay = "off"
+            double nonSpatialTimeScale = 1
+            double spatialTimeScale = 1
+            double speedOfSound = 340
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (-6.243417479096402, 6.019580667370842, 3.610949830236521)
+                double3 target = (-0.03000020980834961, -0.03000020980834961, -0.03000044822692871)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, -1.1102230246251565e-11)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (-4.329780281177466e-12, 50000, 1.1102230246251565e-11)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            token "rtx:rendermode" = "PathTracing"
+        }
+    }
+    defaultPrim = "Root"
+    endTimeCode = 240
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def DistantLight "defaultLight" (
+        prepend apiSchemas = ["ShapingAPI"]
+    )
+    {
+        float angle = 1
+        float intensity = 3000
+        float shaping:cone:angle = 180
+        float shaping:cone:softness
+        float shaping:focus
+        color3f shaping:focusTint
+        asset shaping:ies:file
+        double3 xformOp:rotateXYZ = (315, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+}
+
+def "Root" (
+    kind = "component"
+)
+{
+    def "scene" (
+        prepend references = </RootClass/worlds/scene>
+    )
+    {
+        over "toy_car_slice_z_instance"
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+
+            over "toy_car_slice_z_group"
+            {
+                over "surfaces"
+                {
+                    over "toy_car_slice_z_surface"
+                    {
+                        over "geometry"
+                        {
+                            over "toy_car_slice_z_geometry"
+                            {
+                                rel material:binding = </Root/Looks/OmniPBRSlice_02> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        over "toy_car_slice_y_instance"
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+
+            over "toy_car_slice_y_group"
+            {
+                over "surfaces"
+                {
+                    over "toy_car_slice_y_surface"
+                    {
+                        over "geometry"
+                        {
+                            over "toy_car_slice_y_geometry"
+                            {
+                                rel material:binding = </Root/Looks/OmniPBRSlice_02> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        over "toy_car_slice_x_instance"
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+
+            over "toy_car_slice_x_group"
+            {
+                over "surfaces"
+                {
+                    over "toy_car_slice_x_surface"
+                    {
+                        over "geometry"
+                        {
+                            over "toy_car_slice_x_geometry"
+                            {
+                                rel material:binding = </Root/Looks/OmniPBRSlice_02> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        over "toy_car_streamlines_instance"
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+
+            over "toy_car_streamlines_group"
+            {
+                over "surfaces"
+                {
+                    over "toy_car_streamlines_surface"
+                    {
+                        over "geometry"
+                        {
+                            over "toy_car_streamlines_geometry"
+                            {
+                                rel material:binding = </Root/Looks/OmniPBRSlice_01> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        over "toy_car_isosurface_instance"
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            token visibility = "inherited"
+
+            over "toy_car_isosurface_group"
+            {
+                over "surfaces"
+                {
+                    over "toy_car_isosurface_surface"
+                    {
+                        over "geometry"
+                        {
+                            over "toy_car_isosurface_geometry"
+                            {
+                                rel material:binding = </Root/Looks/OmniGlass> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                bool primvars:isVolume = 0
+                                token visibility = "inherited"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    def Scope "Looks"
+    {
+        rel material:binding = </Root/Looks/Red_Glass> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        bool primvars:doNotCastShadows = 1
+
+        def Material "OmniPBRSlice_01"
+        {
+            token outputs:mdl:displacement.connect = </Root/Looks/OmniPBRSlice_01/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Root/Looks/OmniPBRSlice_01/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Root/Looks/OmniPBRSlice_01/Shader.outputs:out>
+
+            def Shader "Shader" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:albedo_add = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = -1
+                        }
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Add"
+                    doc = "Adds a constant value to the diffuse color "
+                    hidden = false
+                )
+                float inputs:albedo_brightness = 1 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Brightness"
+                    doc = "Multiplier for the diffuse color "
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant.connect = </Root/Looks/OmniPBRSlice_01/lerp01.outputs:out>
+                color3f inputs:diffuse_tint = (0.59, 0.51, 0.45999998) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Color Tint"
+                    doc = "When enabled, this color value is multiplied over the final albedo color"
+                    hidden = false
+                )
+                color3f inputs:emissive_color = (0.16988415, 0, 0) (
+                    customData = {
+                        float3 default = (1, 0.1, 0.1)
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Color"
+                    doc = "The emission color"
+                    hidden = false
+                )
+                float inputs:emissive_intensity = 40 (
+                    customData = {
+                        float default = 40
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Intensity"
+                    doc = "Intensity of the emission"
+                    hidden = false
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Enable Opacity"
+                    doc = "Enables the use of cutout opacity"
+                    hidden = false
+                )
+                float inputs:metallic_constant = 0.25 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Amount"
+                    doc = "Metallic Material"
+                    hidden = false
+                )
+                float inputs:opacity_constant = 0.48999998 (
+                    customData = {
+                        float default = 1
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Opacity Amount"
+                    doc = "Opacity value between 0 and 1, when Opacity Map is not valid"
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.45999998 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:specular_level = 0.22 (
+                    customData = {
+                        float default = 0.5
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Specular"
+                    doc = "The specular level (intensity) of the material"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-621.44934, -386.64297)
+            }
+
+            def Shader "data_lookup_float" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_float"
+                float inputs:default_value = 0.5 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                string inputs:name = "attribute0" (
+                    hidden = false
+                    renderType = "string"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2386.4993, 192.0945)
+            }
+
+            def Shader "lerp" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_01/color_const.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_01/color_const01.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:l.connect = </Root/Looks/OmniPBRSlice_01/clamp01.outputs:out>
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1105.167, -332.08524)
+            }
+
+            def Shader "color_const" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0.01, 0, 0) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1363.3616, -395.69656)
+            }
+
+            def Shader "color_const01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0.4, 0, 0) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1359.8263, -252.50833)
+            }
+
+            def Shader "remap" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:start_old", "inputs:end_old", "inputs:start_new", "inputs:end_new"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "remap(float,float,float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_01/data_lookup_float.outputs:out>
+                float inputs:end_new = 0.99 (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:end_old = 1.3 (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_new = 0.01 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_old = 0.65 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2168.192, 191.75305)
+            }
+
+            def Shader "lerp01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_01/lerp.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_01/lerp02.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:l.connect = </Root/Looks/OmniPBRSlice_01/clamp01.outputs:out>
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-874.3165, -149.34872)
+            }
+
+            def Shader "color_const02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0.38, 0, 0) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1355.5542, -93.69034)
+            }
+
+            def Shader "multiply" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "multiply(float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_01/remap.outputs:out>
+                float inputs:b = 2 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1927.6354, 200.49594)
+            }
+
+            def Shader "color_const03" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0.1, 0, 0) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1358.7853, 44.411583)
+            }
+
+            def Shader "lerp02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_01/color_const02.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_01/color_const03.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:l.connect = </Root/Looks/OmniPBRSlice_01/clamp.outputs:out>
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1114.0201, -75.93723)
+            }
+
+            def Shader "subtract" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "subtract(float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_01/multiply.outputs:out>
+                float inputs:b = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1671.2227, 229.15416)
+            }
+
+            def Shader "clamp" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:min", "inputs:max"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "clamp(float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_01/subtract.outputs:out>
+                float inputs:max = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:min (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1358.487, 216.32095)
+            }
+
+            def Shader "clamp01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:min", "inputs:max"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "clamp(float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_01/multiply.outputs:out>
+                float inputs:max = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:min (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1649.7296, -28.771196)
+            }
+        }
+
+        def Material "OmniPBR_01"
+        {
+            token outputs:mdl:displacement.connect = </Root/Looks/OmniPBR_01/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Root/Looks/OmniPBR_01/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Root/Looks/OmniPBR_01/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.93) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                token outputs:out
+            }
+        }
+
+        def Material "OmniPBRSlices_01"
+        {
+            token outputs:mdl:displacement.connect = </Root/Looks/OmniPBRSlices_01/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Root/Looks/OmniPBRSlices_01/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Root/Looks/OmniPBRSlices_01/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                token outputs:out
+            }
+        }
+
+        def Material "OmniGlass"
+        {
+            token outputs:mdl:displacement.connect = </Root/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Root/Looks/OmniGlass/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Root/Looks/OmniGlass/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniGlass.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniGlass"
+                float inputs:cutout_opacity = 0.31 (
+                    customData = {
+                        float default = 1
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Opacity Amount"
+                    doc = "Opacity value between 0 and 1, when Opacity Map is not valid"
+                    hidden = false
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Enable Opacity"
+                    doc = "Enables the use of cutout opacity"
+                    hidden = false
+                )
+                float inputs:frosting_roughness = 0 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Roughness"
+                    displayName = "Glass Roughness"
+                    doc = "Sets the roughness of the glass material "
+                    hidden = false
+                )
+                color3f inputs:glass_color = (1, 1, 1) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                        dictionary range = {
+                            float3 max = (1, 1, 1)
+                            float3 min = (0, 0, 0)
+                        }
+                    }
+                    displayGroup = "Color"
+                    displayName = "Glass Color"
+                    doc = "Sets the color of the glass"
+                    hidden = false
+                )
+                color3f inputs:reflection_color = (1, 0.8, 0.8) (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    displayGroup = "Reflection"
+                    displayName = "Reflection Color"
+                    hidden = false
+                )
+                bool inputs:thin_walled = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Refraction"
+                    displayName = "Thin Walled"
+                    doc = "When enabled, the material is considered thin-walled. Use this, when you have glass surfaces that are modeled with a single plane"
+                    hidden = false
+                )
+                token outputs:out
+            }
+        }
+
+        over "OmniPBRStreamlines"
+        {
+            over "add"
+            {
+                float inputs:b = 20
+            }
+        }
+
+        def Material "OmniPBRSlice_02"
+        {
+            token outputs:mdl:displacement.connect = </Root/Looks/OmniPBRSlice_02/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Root/Looks/OmniPBRSlice_02/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Root/Looks/OmniPBRSlice_02/Shader.outputs:out>
+
+            def Shader "Shader" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                float inputs:albedo_brightness = 1 (
+                    customData = {
+                        float default = 1
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Brightness"
+                    doc = "Multiplier for the diffuse color "
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant = (0.2, 0.2, 0.2) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Base Color"
+                    doc = "This is the base color"
+                    hidden = false
+                )
+                color3f inputs:diffuse_color_constant.connect = </Root/Looks/OmniPBRSlice_02/lerp01.outputs:out>
+                color3f inputs:emissive_color = (1, 0.1, 0.1) (
+                    customData = {
+                        float3 default = (1, 0.1, 0.1)
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Color"
+                    doc = "The emission color"
+                    hidden = false
+                )
+                color3f inputs:emissive_color.connect = </Root/Looks/OmniPBRSlice_02/lerp01.outputs:out>
+                float inputs:emissive_intensity = 40 (
+                    customData = {
+                        float default = 40
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Emissive Intensity"
+                    doc = "Intensity of the emission"
+                    hidden = false
+                )
+                float inputs:emissive_intensity.connect = </Root/Looks/OmniPBRSlice_02/multiply01.outputs:out>
+                bool inputs:enable_emission = 0 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Emissive"
+                    displayName = "Enable Emission"
+                    doc = "Enables the emission of light from the material"
+                    hidden = false
+                )
+                bool inputs:enable_opacity = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Enable Opacity"
+                    doc = "Enables the use of cutout opacity"
+                    hidden = false
+                )
+                float inputs:opacity_constant = 1 (
+                    customData = {
+                        float default = 1
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Opacity"
+                    displayName = "Opacity Amount"
+                    doc = "Opacity value between 0 and 1, when Opacity Map is not valid"
+                    hidden = false
+                )
+                float inputs:opacity_constant.connect = </Root/Looks/OmniPBRSlice_02/remap01.outputs:out>
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Amount"
+                    doc = "Higher roughness values lead to more blurry reflections"
+                    hidden = false
+                )
+                float inputs:specular_level = 0 (
+                    customData = {
+                        float default = 0.5
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Specular"
+                    doc = "The specular level (intensity) of the material"
+                    hidden = false
+                )
+                token outputs:out
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-621.44934, -386.64297)
+            }
+
+            def Shader "data_lookup_float" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:name", "inputs:default_value"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "data_lookup_float"
+                float inputs:default_value = 0.5 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                string inputs:name = "attribute0" (
+                    hidden = false
+                    renderType = "string"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2386.4993, 192.0945)
+            }
+
+            def Shader "lerp" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_02/color_const.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_02/color_const01.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1114.0334, -337.4039)
+            }
+
+            def Shader "color_const" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1363.3616, -395.69656)
+            }
+
+            def Shader "color_const01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0, 2, 0.5) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1359.8263, -252.50833)
+            }
+
+            def Shader "remap" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:start_old", "inputs:end_old", "inputs:start_new", "inputs:end_new"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "remap(float,float,float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/data_lookup_float.outputs:out>
+                float inputs:end_new = 0.99 (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:end_old = 1.3 (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_new = 0.01 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_old = 0.7 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-2168.192, 191.75305)
+            }
+
+            def Shader "lerp01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_02/lerp.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_02/lerp02.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:l.connect = </Root/Looks/OmniPBRSlice_02/remap.outputs:out>
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-874.3165, -149.34872)
+            }
+
+            def Shader "color_const02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (0, 2, 0.5) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1355.5542, -93.69034)
+            }
+
+            def Shader "multiply" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "multiply(float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/remap.outputs:out>
+                float inputs:b = 2 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1927.6354, 200.49594)
+            }
+
+            def Shader "color_const03" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "color_const"
+                color3f inputs:c = (1, 0, 0) (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1358.7853, 44.411583)
+            }
+
+            def Shader "lerp02" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b", "inputs:l"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "lerp(color,color,float)"
+                color3f inputs:a (
+                    customData = {
+                        float3 default = (0, 0, 0)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:a.connect = </Root/Looks/OmniPBRSlice_02/color_const02.outputs:out>
+                color3f inputs:b (
+                    customData = {
+                        float3 default = (1, 1, 1)
+                    }
+                    hidden = false
+                    renderType = "color"
+                )
+                color3f inputs:b.connect = </Root/Looks/OmniPBRSlice_02/color_const03.outputs:out>
+                float inputs:l (
+                    customData = {
+                        float default = 0
+                        dictionary soft_range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:l.connect = </Root/Looks/OmniPBRSlice_02/clamp.outputs:out>
+                color3f outputs:out (
+                    renderType = "color"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1114.0201, -75.93723)
+            }
+
+            def Shader "subtract" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "subtract(float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/multiply.outputs:out>
+                float inputs:b = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1671.2227, 229.15416)
+            }
+
+            def Shader "clamp" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:min", "inputs:max"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "clamp(float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/subtract.outputs:out>
+                float inputs:max = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:min (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1358.487, 216.32095)
+            }
+
+            def Shader "clamp01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:min", "inputs:max"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "clamp(float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/multiply.outputs:out>
+                float inputs:max = 1 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:min (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1672.2952, 37.6708)
+            }
+
+            def Shader "multiply01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:b"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "multiply(float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/clamp.outputs:out>
+                float inputs:b = 100 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1027.5118, 190.28288)
+            }
+
+            def Shader "remap01" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                reorder properties = ["inputs:a", "inputs:start_old", "inputs:end_old", "inputs:start_new", "inputs:end_new"]
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @nvidia/support_definitions.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "remap(float,float,float,float,float)"
+                float inputs:a (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:a.connect = </Root/Looks/OmniPBRSlice_02/clamp.outputs:out>
+                float inputs:end_new (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:end_old (
+                    customData = {
+                        float default = 1
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_new = 0.2 (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float inputs:start_old (
+                    customData = {
+                        float default = 0
+                    }
+                    hidden = false
+                    renderType = "float"
+                )
+                float outputs:out (
+                    renderType = "float"
+                )
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (-1096.3308, 350.9298)
+            }
+        }
+    }
+}
+
+def "Environment"
+{
+    def Xform "sky" (
+        prepend references = @http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Skies/Dynamic/NightSky.usd@
+    )
+    {
+        float3 xformOp:rotateZYX = (0, 0, 0)
+
+        over "AxisNorth"
+        {
+            double3 xformOp:rotateZYX = (0, 0, 0)
+
+            over "AxisLatitude"
+            {
+                double3 xformOp:rotateZYX = (0, 0, 51.426)
+
+                over "AxisSHA"
+                {
+                    double3 xformOp:rotateZYX = (225.34346559996118, 0, 0)
+
+                    over "AxisDeclination"
+                    {
+                        double3 xformOp:rotateZYX = (0, 0, 7.999834338981633)
+
+                        over "DistantLight"
+                        {
+                            color3f color = (1, 0.98, 0.95)
+                            float intensity = 5000
+                        }
+                    }
+                }
+            }
+
+            over "AxisAzimuth"
+            {
+                double3 xformOp:rotateZYX = (0, -122.99551684572108, 0)
+
+                over "AxisElevation"
+                {
+                    double3 xformOp:rotateZYX = (0, 0, 32.87354494703496)
+                }
+            }
+
+            over "SkySphere"
+            {
+                over "Sphere"
+                {
+                    uniform bool doubleSided = 0
+                    bool primvars:holdoutObject = 0
+                    bool primvars:invisibleToSecondaryRays = 1
+                    bool primvars:isVolume = 0
+                    bool singleSided = 0
+                }
+            }
+        }
+
+        over "DomeLight"
+        {
+            float3 xformOp:rotateZYX = (270, 0, 0)
+        }
+
+        over "Looks"
+        {
+            over "SkyMaterial"
+            {
+                over "Shader"
+                {
+                    float inputs:Azimuth = -122.995514
+                    float inputs:DayOfYear = 100
+                    float inputs:Declination = 7.9998345
+                    float inputs:Elevation = 32.873547
+                    float inputs:Latitude = 51.426
+                    float inputs:Longitude = -0.985
+                    float inputs:NorthOrientation = 0
+                    float inputs:SHA = -45.343464
+                    float inputs:TimeOfDay = 9
+                }
+            }
+        }
+    }
+}
+

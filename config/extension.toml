@@ -1,0 +1,33 @@
+[package]
+# Semantic Versioning is used: https://semver.org/
+version = "1.0.0"
+
+# The title and description fields are primarily for displaying extension info in UI
+title = "Toy car aerodynamics example"
+description="Project commisioned for Faculty of materials, metallurgy and recyclation (FMMR) at Technical university of Košice."
+
+# Path (relative to the root) or content of readme markdown file for UI.
+readme  = "README.md"
+changelog = "docs/CHANGELOG.md"
+preview_image = "data/toy-car.png"
+icon = "data/icon.png"
+
+# URL of the extension source repository.
+repository = ""
+
+# One of categories for UI.
+category = "Simulation"
+
+# Keywords for the extension
+keywords = ["modulus", "toy-car", "STL geometry", "scenario"]
+
+
+# Use omni.ui to build simple UI
+[dependencies]
+"modulus_ext.core" = {version="22.9.0"}
+"modulus_ext.ui" = {version="2.0.0"}
+"hpcvis.vtkm_bridge.core" = {version="1.0.2-alpha-03"}
+
+# Main python module this extension provides".
+[[python.module]]
+name = "toy-car"

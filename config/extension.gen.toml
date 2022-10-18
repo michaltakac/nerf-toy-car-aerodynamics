@@ -1,0 +1,6 @@
+[package]
+[package.target]
+python = ["cp37"]
+[package.publish]
+date = 1662766157
+kitVersion = "103.5+release.6600.0a006a6d.tc"
